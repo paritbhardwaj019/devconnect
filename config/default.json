@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://paritbhardwaj:b14ck-cyph3R@devconnector.lmeu0x0.mongodb.net/devconnector"
+  "mongoURI": "mongodb+srv://paritbhardwaj:b14ck-cyph3R@devconnector.lmeu0x0.mongodb.net/devconnector",
+  "jwtSecret": "P112QqpxKe3aE0KryMpD"
 }
