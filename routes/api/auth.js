@@ -3,8 +3,9 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const config = require('config');
+const jwt = require('jsonwebtoken');
 
 // @route   GET api/auth
 // @desc    Get user Route
@@ -29,8 +30,8 @@ router.get('/', auth, async function (req, res) {
 
 router.post(
   '/',
-  body('email', 'Please enter a valid email').isEmail(),
-  body('password', 'Password is required').exists(),
+  check('email', 'Please enter a valid email').isEmail(),
+  check('password', 'Password is required').exists(),
   async function (req, res) {
     const errors = validationResult(req);
 
@@ -39,8 +40,10 @@ router.post(
     }
 
     const { email, password } = req.body;
+    const jwtSecret = config.get('jwtSecret');
+
     try {
-      let user = await User.findOne({ email });
+      const user = await User.findOne({ email });
 
       if (!user) {
         return res.status(400).json({
@@ -64,7 +67,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        jwtSecret,
         {
           expiresIn: 3600,
         },

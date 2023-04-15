@@ -1,9 +1,8 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const connectDB = require("./config/db");
+const express = require('express');
+const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
-
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: './config.env' });
 
 const app = express();
 
@@ -11,16 +10,16 @@ const app = express();
 connectDB();
 
 // Init Middlware
-app.use(express.json({ extended: false }));
+app.use(express.json());
 
 // Routes
-app.use("/api/users", require("./routes/api/users"));
-app.use("/api/posts", require("./routes/api/posts"));
-app.use("/api/profile", require("./routes/api/profile"));
-app.use("/api/auth", require("./routes/api/auth"));
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/auth', require('./routes/api/auth'));
 
-app.get("/", function (req, res) {
-  res.send("API Running...");
+app.get('/', function (req, res) {
+  res.send('API Running...');
 });
 
 const PORT = process.env.PORT || 5000;
